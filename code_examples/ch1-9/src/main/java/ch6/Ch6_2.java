@@ -29,4 +29,12 @@ public class Ch6_2 {
             e.printStackTrace();
         }
     }
+
+    public static void println(Object s) {
+        System.out.println(currentThread() + "->" + s);
+    }
+
+    public static String currentThread() {
+        return Thread.currentThread().getName();
+    }
 }
