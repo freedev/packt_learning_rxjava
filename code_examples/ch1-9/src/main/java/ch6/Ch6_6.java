@@ -7,18 +7,19 @@ import io.reactivex.Observable;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-public class Ch6_6 {
+public class Ch6_6 extends Ch6_Base {
     public static void main(String[] args) {
         Observable.just("Alpha", "Beta", "Gamma", "Delta",
                 "Epsilon")
                 .subscribeOn(Schedulers.computation())
                 .map(Ch6_6::intenseCalculation)
-                .blockingSubscribe(System.out::println,
+                .blockingSubscribe(Ch6_Base::println,
                         Throwable::printStackTrace,
-                        () -> System.out.println("Done!"));
+                        () -> Ch6_Base.println("Done!"));
     }
 
     public static <T> T intenseCalculation(T value) {
+        Ch6_Base.println("intenseCalculation");
         sleep(ThreadLocalRandom.current().nextInt(3000));
         return value;
     }

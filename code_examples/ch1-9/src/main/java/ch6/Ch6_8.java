@@ -7,7 +7,7 @@ import io.reactivex.schedulers.Schedulers;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-public class Ch6_8 {
+public class Ch6_8 extends Ch6_Base {
     public static void main(String[] args) {
         Observable<Integer> lengths =
                 Observable.just("Alpha", "Beta", "Gamma", "Delta",
@@ -16,15 +16,14 @@ public class Ch6_8 {
                         .map(Ch6_8::intenseCalculation)
                         .map(String::length);
         lengths.subscribe(i ->
-                System.out.println("Received " + i + " on thread " +
-                        Thread.currentThread().getName()));
+                Ch6_Base.println("Received " + i));
         lengths.subscribe(i ->
-                System.out.println("Received " + i + " on thread " +
-                        Thread.currentThread().getName()));
+                Ch6_Base.println("Received " + i));
         sleep(10000);
     }
 
     public static <T> T intenseCalculation(T value) {
+        println("intenseCalculation");
         sleep(ThreadLocalRandom.current().nextInt(3000));
         return value;
     }

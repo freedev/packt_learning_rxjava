@@ -9,7 +9,7 @@ import io.reactivex.schedulers.Schedulers;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class Ch6_7 {
+public class Ch6_7 extends Ch6_Base {
     public static void main(String[] args) {
         int numberOfThreads = 20;
         ExecutorService executor =
@@ -18,7 +18,11 @@ public class Ch6_7 {
         Observable.just("Alpha", "Beta", "Gamma", "Delta",
                 "Epsilon")
                 .subscribeOn(scheduler)
+                .map(s -> {
+                    println(s);
+                    return s.length();
+                })
                 .doFinally(executor::shutdown)
-                .subscribe(System.out::println);
+                .subscribe(Ch6_Base::println);
     }
 }

@@ -6,22 +6,7 @@ import io.reactivex.Observable;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-public class Ch6_2 {
-    public static void main(String[] args) {
-        Observable.just("Alpha", "Beta", "Gamma", "Delta",
-                "Epsilon")
-                .map(s -> intenseCalculation((s)))
-                .subscribe(Ch6_2::println);
-        Observable.range(1, 6)
-                .map(s -> intenseCalculation((s)))
-                .subscribe(Ch6_2::println);
-    }
-
-    public static <T> T intenseCalculation(T value) {
-        println("intenseCalculation");
-        sleep(ThreadLocalRandom.current().nextInt(3000));
-        return value;
-    }
+public class Ch6_Base {
 
     public static void sleep(long millis) {
         try {

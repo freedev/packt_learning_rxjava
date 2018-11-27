@@ -7,15 +7,16 @@ import io.reactivex.Observable;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 
-public class Ch6_5 {
+public class Ch6_5 extends Ch6_Base {
     public static void main(String[] args) {
         Observable.interval(1, TimeUnit.SECONDS)
                 .map(l -> intenseCalculation((l)))
-                .subscribe(System.out::println);
+                .subscribe(Ch6_Base::println);
         sleep(Long.MAX_VALUE);
     }
 
     public static <T> T intenseCalculation(T value) {
+        println("intenseCalculation");
         sleep(ThreadLocalRandom.current().nextInt(3000));
         return value;
     }
