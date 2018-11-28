@@ -4,19 +4,28 @@ package ch6;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import io.reactivex.Observable;
+import io.reactivex.Scheduler;
 import io.reactivex.schedulers.Schedulers;
 
 import java.net.URL;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
-public class Ch6_10 extends Ch6_Base {
+public class Ch6_10Bis extends Ch6_Base {
     public static void main(String[] args) {
+
+        int numberOfThreads = 20;
+        ExecutorService executor =
+                Executors.newFixedThreadPool(numberOfThreads);
+        Scheduler scheduler = Schedulers.from(executor);
+
         Observable.fromCallable(() ->
                 getResponse("https://api.github.com/users/thomasnield/starred")
-        ).flatMap(list -> Observable.fromArray(list.toArray()))
-                .subscribeOn(Schedulers.io())
+        ).subscribeOn(scheduler).flatMap(list -> Observable.fromArray(list.toArray()))
+
                 .subscribe(Ch6_Base::println);
         sleep(10000);
     }

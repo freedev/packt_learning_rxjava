@@ -2,11 +2,14 @@
 
 package ch6;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.reactivex.Observable;
 
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Ch6_Base {
+
+    public static final ObjectMapper objectMapper = new ObjectMapper();
 
     public static void sleep(long millis) {
         try {

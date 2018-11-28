@@ -7,22 +7,11 @@ import io.reactivex.schedulers.Schedulers;
 
 import java.util.concurrent.TimeUnit;
 
-public class Ch6_11 {
+public class Ch6_11 extends Ch6_Base {
     public static void main(String[] args) {
         Observable.interval(1, TimeUnit.SECONDS,
                 Schedulers.newThread())
-                .subscribe(i -> System.out.println("Received " + i
-                        +
-                        " on thread " +
-                        Thread.currentThread().getName()));
+                .subscribe(i -> Ch6_Base.println("Received " + i));
         sleep(5000);
-    }
-
-    public static void sleep(int millis) {
-        try {
-            Thread.sleep(millis);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 }
