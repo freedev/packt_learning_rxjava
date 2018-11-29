@@ -2,6 +2,7 @@
 
 package ch6;
 
+import base.ChBase;
 import io.reactivex.Observable;
 import io.reactivex.Scheduler;
 import io.reactivex.schedulers.Schedulers;
@@ -9,7 +10,7 @@ import io.reactivex.schedulers.Schedulers;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class Ch6_7 extends Ch6_Base {
+public class Ch6_7 extends ChBase {
     public static void main(String[] args) {
         int numberOfThreads = 20;
         ExecutorService executor =
@@ -23,6 +24,6 @@ public class Ch6_7 extends Ch6_Base {
                     return s.length();
                 })
                 .doFinally(executor::shutdown)
-                .subscribe(Ch6_Base::println);
+                .subscribe(ChBase::println);
     }
 }

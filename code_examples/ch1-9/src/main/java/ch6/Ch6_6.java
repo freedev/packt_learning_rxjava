@@ -2,24 +2,25 @@
 
 package ch6;
 
-import io.reactivex.schedulers.Schedulers;
+import base.ChBase;
 import io.reactivex.Observable;
+import io.reactivex.schedulers.Schedulers;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-public class Ch6_6 extends Ch6_Base {
+public class Ch6_6 extends ChBase {
     public static void main(String[] args) {
         Observable.just("Alpha", "Beta", "Gamma", "Delta",
                 "Epsilon")
                 .subscribeOn(Schedulers.computation())
                 .map(Ch6_6::intenseCalculation)
-                .blockingSubscribe(Ch6_Base::println,
+                .blockingSubscribe(ChBase::println,
                         Throwable::printStackTrace,
-                        () -> Ch6_Base.println("Done!"));
+                        () -> ChBase.println("Done!"));
     }
 
     public static <T> T intenseCalculation(T value) {
-        Ch6_Base.println("intenseCalculation");
+        ChBase.println("intenseCalculation");
         sleep(ThreadLocalRandom.current().nextInt(3000));
         return value;
     }

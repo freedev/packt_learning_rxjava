@@ -2,16 +2,17 @@
 
 package ch6;
 
+import base.ChBase;
 import io.reactivex.Observable;
 
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 
-public class Ch6_5 extends Ch6_Base {
+public class Ch6_5 extends ChBase {
     public static void main(String[] args) {
         Observable.interval(1, TimeUnit.SECONDS)
                 .map(l -> intenseCalculation((l)))
-                .subscribe(Ch6_Base::println);
+                .subscribe(ChBase::println);
         sleep(Long.MAX_VALUE);
     }
 

@@ -2,12 +2,13 @@
 
 package ch6;
 
+import base.ChBase;
 import io.reactivex.Observable;
 import io.reactivex.schedulers.Schedulers;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-public class Ch6_8 extends Ch6_Base {
+public class Ch6_8 extends ChBase {
     public static void main(String[] args) {
         Observable<Integer> lengths =
                 Observable.just("Alpha", "Beta", "Gamma", "Delta",
@@ -16,9 +17,9 @@ public class Ch6_8 extends Ch6_Base {
                         .map(Ch6_8::intenseCalculation)
                         .map(String::length);
         lengths.subscribe(i ->
-                Ch6_Base.println("Received " + i));
+                ChBase.println("Received " + i));
         lengths.subscribe(i ->
-                Ch6_Base.println("Received " + i));
+                ChBase.println("Received " + i));
         sleep(10000);
     }
 

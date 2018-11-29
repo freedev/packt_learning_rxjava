@@ -2,6 +2,7 @@
 
 package ch6;
 
+import base.ChBase;
 import io.reactivex.Observable;
 import io.reactivex.schedulers.Schedulers;
 
@@ -9,31 +10,44 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 
-public class Ch6_14 {
+public class Ch6_14 extends ChBase {
     public static void main(String[] args) {
 //Happens on IO Scheduler
         Observable.just("WHISKEY/27653/TANGO", "6555/BRAVO",
                 "232352/5675675/FOXTROT")
                 .subscribeOn(Schedulers.io())
-                .flatMap(s -> Observable.fromArray(s.split("/")))
-                .doOnNext(s -> System.out.println("Split out " + s
-                        + " on thread "
-                        + Thread.currentThread().getName()))
+                .flatMap(s -> {
+                    println("flatMap");
+                    return Observable.fromArray(s.split("/"));
+                })
+ //               .doOnNext(s -> println("Split out " + s))
 //Happens on Computation Scheduler
                 .observeOn(Schedulers.computation())
-                .filter(s -> s.matches("[0-9]+"))
-                .map(Integer::valueOf)
-                .reduce((total, next) -> total + next)
-                .doOnSuccess(i -> System.out.println("Calculated sum" + i + " on thread"
-                                + Thread.currentThread().getName()))
+                .filter(s -> {
+                    println("filter");
+                    return s.matches("[0-9]+");
+                })
+                .map(s1 -> {
+                    println("valueOf");
+                    return Integer.valueOf(s1);
+                })
+                .reduce((total, next) -> {
+                    println("total + next");
+                    return total + next;
+                })
+//                .doOnSuccess(i -> println("Calculated sum" + i ))
 //Switch back to IO Scheduler
                 .observeOn(Schedulers.io())
-                .map(i -> i.toString())
-                .doOnSuccess(s -> System.out.println("Writing " + s
-                        + " to file on thread "
-                        + Thread.currentThread().getName()))
+                .map(i -> {
+                    println("toString");
+                    return i.toString();
+                })
+                .doOnSuccess(s -> println("Writing " + s + " to file"))
                 .subscribe(s ->
-                        write(s, "/home/thomas/Desktop/output.txt"));
+                {
+                    println("write");
+                    write(s, "/tmp/output.txt");
+                });
         sleep(1000);
     }
 

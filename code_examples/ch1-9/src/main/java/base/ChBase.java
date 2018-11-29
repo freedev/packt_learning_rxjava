@@ -1,21 +1,17 @@
-/* Compilable code examples can be found at https://github.com/thomasnield/packt_learning_rxjava */
-
-package ch6;
+package base;/* Compilable code examples can be found at https://github.com/thomasnield/packt_learning_rxjava */
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.reactivex.Observable;
 
-import java.util.concurrent.ThreadLocalRandom;
-
-public class Ch6_Base {
+public class ChBase {
 
     public static final ObjectMapper objectMapper = new ObjectMapper();
 
     public static void sleep(long millis) {
         try {
+            println("sleep " + millis);
             Thread.sleep(millis);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 

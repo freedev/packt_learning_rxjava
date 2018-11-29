@@ -2,23 +2,28 @@
 
 package ch6;
 
+import base.ChBase;
 import io.reactivex.Observable;
 import io.reactivex.schedulers.Schedulers;
 
 import java.time.LocalTime;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class Ch6_17 {
+public class Ch6_17 extends ChBase {
     public static void main(String[] args) {
+        println("entering main");
         Observable.range(1, 10)
-                .flatMap(i -> Observable.just(i)
-                        .subscribeOn(Schedulers.computation())
-                        .map(i2 -> intenseCalculation(i2))
-                )
-                .subscribe(i -> System.out.println("Received " + i +
-                        " "
-                        + LocalTime.now() + " on thread "
-                        + Thread.currentThread().getName()));
+                  .flatMap(i -> {
+                              println("entering flatMap");
+                              return Observable.just(i)
+                                               .subscribeOn(Schedulers.computation())
+                                               .map(i2 -> {
+                                                   println("before intenseCalculation");
+                                                   return intenseCalculation(i2);
+                                               });
+                          }
+                  )
+                  .subscribe(i -> println("Received " + i + " " + LocalTime.now()));
         sleep(20000);
     }
 

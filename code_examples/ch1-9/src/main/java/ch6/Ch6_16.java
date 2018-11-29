@@ -2,21 +2,21 @@
 
 package ch6;
 
+import base.ChBase;
 import io.reactivex.Observable;
 
 import java.time.LocalTime;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class Ch6_16 {
+public class Ch6_16 extends ChBase {
     public static void main(String[] args) {
         Observable.range(1, 10)
-                .map(i -> intenseCalculation(i))
-                .subscribe(i -> System.out.println("Received " + i +
-                        " "
-                        + LocalTime.now()));
+                  .map(i -> intenseCalculation(i))
+                  .subscribe(i -> println("Received " + i + " " + LocalTime.now()));
     }
 
     public static <T> T intenseCalculation(T value) {
+        println("intenseCalculation");
         sleep(ThreadLocalRandom.current().nextInt(3000));
         return value;
     }
